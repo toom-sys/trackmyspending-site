@@ -1,6 +1,6 @@
 # metriqs.io
 
-Public site for [metriqs.io](https://metriqs.io).
+Hub for [Metriqs](https://metriqs.io) public source data projects.
 
-- `/` — Metriqs hub
-- `/woodlands/` — Woodland Atlas (static copy; source of truth is `toom-sys/woodland-atlas`)
+- `/` — Metriqs home
+- `/woodlands/` — Woodland Atlas (synced from `toom-sys/woodland-atlas`)

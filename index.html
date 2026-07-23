@@ -115,24 +115,25 @@
     .hero-copy {
       display: grid;
       align-content: center;
-      max-width: 18ch;
+      max-width: min(34rem, 100%);
       padding: clamp(2rem, 8vh, 5rem) 0;
     }
 
     .hero-copy h1 {
       font-family: "Instrument Serif", Georgia, serif;
       font-weight: 400;
-      font-size: clamp(2.5rem, 6.5vw, 4.2rem);
-      line-height: 1.05;
+      font-size: clamp(2.75rem, 7vw, 4.6rem);
+      line-height: 1.08;
       letter-spacing: -0.02em;
       margin-bottom: 1.1rem;
+      max-width: 12ch;
     }
 
     .hero-copy p {
       font-size: 1.125rem;
       line-height: 1.55;
       color: var(--ink-soft);
-      max-width: 32ch;
+      max-width: 40ch;
       margin-bottom: 2rem;
     }
 
@@ -323,6 +324,10 @@
       }
 
       .hero-copy {
+        max-width: none;
+      }
+
+      .hero-copy h1 {
         max-width: none;
       }
     }

@@ -3,15 +3,289 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrackMySpending</title>
+  <title>Metriqs</title>
+  <meta name="description" content="Metriqs — tools for clearer decisions. TrackMySpending and Woodland Atlas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: Inter, sans-serif; margin: 0; background: #f8f9fb; color: #222; text-align: center; padding-top: 20vh; }
-    h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-    p { font-size: 1.1rem; color: #555; }
+    :root {
+      --ink: #0f1412;
+      --ink-soft: #3a4540;
+      --mist: #e8eee9;
+      --paper: #f4f7f4;
+      --line: #c5d0c8;
+      --accent: #1f6b4a;
+      --accent-deep: #0f3d2c;
+      --glow: #9bc4ae;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      font-family: Outfit, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 700px at 12% -10%, rgba(31, 107, 74, 0.18), transparent 55%),
+        radial-gradient(900px 600px at 90% 10%, rgba(155, 196, 174, 0.35), transparent 50%),
+        linear-gradient(165deg, #eef3ef 0%, var(--paper) 45%, #e2ebe4 100%);
+      background-attachment: fixed;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 1.25rem clamp(1.25rem, 4vw, 3rem) 1.5rem;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .tabs {
+      display: inline-flex;
+      gap: 0.25rem;
+      padding: 0.25rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(10px);
+    }
+
+    .tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--ink-soft);
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .tab[aria-selected="true"] {
+      background: var(--ink);
+      color: #f5f8f5;
+    }
+
+    .tab:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    main {
+      display: grid;
+      align-content: center;
+      justify-items: start;
+      max-width: 42rem;
+      padding: clamp(3rem, 12vh, 7rem) 0 clamp(2rem, 6vh, 4rem);
+    }
+
+    .panel[hidden] { display: none; }
+
+    .kicker {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      max-width: 14ch;
+    }
+
+    .lede {
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 34ch;
+      margin-bottom: 2rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.75rem;
+      padding: 0.7rem 1.25rem;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #f4faf6;
+    }
+
+    .btn-primary:hover { background: var(--accent-deep); }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.5);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .note {
+      margin-top: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+
+    footer {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      padding-top: 1rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tab, .btn { transition: none; }
+      .btn:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
-  <h1>TrackMySpending</h1>
-  <p>Visualise your spending in real time.<br/>Budget smarter. Live better.<br/><br/>Coming soon.</p>
+  <div class="shell">
+    <header class="top">
+      <a class="brand" href="/">Metriqs</a>
+      <nav class="tabs" role="tablist" aria-label="Products">
+        <button
+          class="tab"
+          role="tab"
+          id="tab-spending"
+          aria-controls="panel-spending"
+          aria-selected="true"
+          data-tab="spending"
+          type="button"
+        >TrackMySpending</button>
+        <button
+          class="tab"
+          role="tab"
+          id="tab-woodlands"
+          aria-controls="panel-woodlands"
+          aria-selected="false"
+          data-tab="woodlands"
+          type="button"
+        >Woodlands</button>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="panel"
+        role="tabpanel"
+        id="panel-spending"
+        aria-labelledby="tab-spending"
+      >
+        <p class="kicker">TrackMySpending</p>
+        <h1>See where the money goes.</h1>
+        <p class="lede">Visualise your spending in real time. Budget smarter. Live better.</p>
+        <div class="actions">
+          <span class="btn btn-ghost" aria-disabled="true">Coming soon</span>
+        </div>
+      </section>
+
+      <section
+        class="panel"
+        role="tabpanel"
+        id="panel-woodlands"
+        aria-labelledby="tab-woodlands"
+        hidden
+      >
+        <p class="kicker">Woodland Atlas</p>
+        <h1>Select woodland. See its value.</h1>
+        <p class="lede">Map GB woodland from open public data, build a selection, and price it with a transparent model.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/woodlands/">Open Woodland Atlas</a>
+        </div>
+        <p class="note">Indicative briefing tool · open data · no account required</p>
+      </section>
+    </main>
+
+    <footer>© Metriqs</footer>
+  </div>
+
+  <script>
+    const tabs = [...document.querySelectorAll('[role="tab"]')];
+    const panels = {
+      spending: document.getElementById('panel-spending'),
+      woodlands: document.getElementById('panel-woodlands')
+    };
+
+    function selectTab(name, { pushHash = true } = {}) {
+      tabs.forEach((tab) => {
+        const on = tab.dataset.tab === name;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+      });
+      Object.entries(panels).forEach(([key, panel]) => {
+        panel.hidden = key !== name;
+      });
+      if (pushHash) {
+        const hash = name === 'spending' ? '' : `#${name}`;
+        history.replaceState(null, '', hash || location.pathname);
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.tab));
+      tab.addEventListener('keydown', (e) => {
+        const i = tabs.indexOf(tab);
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = tabs[(i + 1) % tabs.length];
+          next.focus();
+          selectTab(next.dataset.tab);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = tabs[(i - 1 + tabs.length) % tabs.length];
+          prev.focus();
+          selectTab(prev.dataset.tab);
+        }
+      });
+    });
+
+    const initial = location.hash.replace('#', '') === 'woodlands' ? 'woodlands' : 'spending';
+    selectTab(initial, { pushHash: false });
+  </script>
 </body>
 </html>

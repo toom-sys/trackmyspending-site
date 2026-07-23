@@ -2,5 +2,5 @@
 
 Public site for [metriqs.io](https://metriqs.io).
 
-- `/` — Metriqs hub (TrackMySpending · Woodlands tabs)
+- `/` — Metriqs hub
 - `/woodlands/` — Woodland Atlas (static copy; source of truth is `toom-sys/woodland-atlas`)
